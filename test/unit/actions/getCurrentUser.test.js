@@ -66,8 +66,6 @@ test('getCurrentUser => success', (t) => {
     t.pass('getCurrentUser returned promise.resolve() was called');
   });
 
-  t.plan(11);
-
   t.ok(fm.mock.currentUser.getSession.called, 'cognitoUser.getSession should be called');
   t.ok(fm.mock.currentUser.getSession.calledOnce, 'cognitoUser.getSession should be called exactly once');
   t.ok(fm.mock.currentUser.getUsername.called, 'cognitoUser.getUsername should be called');
@@ -77,8 +75,12 @@ test('getCurrentUser => success', (t) => {
   t.ok(sessionInstance.getRefreshToken.calledOnce, 'session.getRefreshToken should be called once');
 
   t.ok(fm.fake.commit.called, 'state.commit should be called');
-  t.ok(fm.fake.commit.calledOnce, 'state.commit should be called exactly once');
+  t.ok(fm.fake.commit.calledTwice, 'state.commit should be called exactly twice');
   t.ok(fm.fake.commit.calledWithMatch(
     sinon.match(types.AUTHENTICATE),
-  ), `mutation ${types.AUTHENTICATE} should receive CognitoUser payload`);
+  ), `mutation ${types.AUTHENTICATE} should receive constructedUser payload`);
+  t.ok(fm.fake.commit.calledWithMatch(
+    sinon.match(types.SET_COGNITO_USER),
+  ), `mutation ${types.SET_COGNITO_USER} should receive CognitoUser payload`);
+  t.end();
 });

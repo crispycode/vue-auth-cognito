@@ -10,4 +10,7 @@ export default {
   [types.ATTRIBUTES](state, payload) {
     state.user.attributes = payload;
   },
+  [types.SET_COGNITO_USER] (state, payload) {
+    state.cognitoUser = payload;
+  }
 };

@@ -46,8 +46,6 @@ test('signUp => onSuccess', (t) => {
     },
   );
 
-  t.plan(9);
-
   t.ok(fm.methods.CognitoUserPool.signUp.called, 'cognitoUserPool.signUp should be called');
   t.ok(fm.methods.CognitoUserPool.signUp.calledOnce, 'cognitoUserPool.signUp should be called exactly once');
   t.deepEqual(fm.methods.CognitoUserPool.signUp.firstCall.args[0],
@@ -61,7 +59,7 @@ test('signUp => onSuccess', (t) => {
     'cognitoUserPool.signUp first two arguments should be username and password');
 
   t.ok(fm.fake.commit.called, 'state.commit should be called');
-  t.ok(fm.fake.commit.calledOnce, 'state.commit should be called exactly once');
+  t.ok(fm.fake.commit.calledTwice, 'state.commit should be called exactly twice');
   t.ok(fm.fake.commit.calledWithMatch(
     sinon.match(types.AUTHENTICATE),
     sinon.match({
@@ -70,6 +68,10 @@ test('signUp => onSuccess', (t) => {
       attributes: {},
     }),
   ), `mutation ${types.AUTHENTICATE} should receive user payload`);
+  t.ok(fm.fake.commit.calledWithMatch(
+    sinon.match(types.SET_COGNITO_USER)
+  ), `mutation ${types.SET_COGNITO_USER} should receive cognito user payload`);
+  t.end();
 });
 
 test('signUp => onFailure', (t) => {

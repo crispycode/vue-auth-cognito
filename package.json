@@ -10,7 +10,7 @@
     "prepublish": "npm run compile",
     "coverage": "tap --cov --coverage-report=html --strict test/unit/index.js"
   },
-  "repository": "https://github.com/kopterio/vue-auth-cognito",
+  "repository": "https://github.com/crispycode/vuex-cognito",
   "author": "Evgeny Zislis <evgeny.zislis@gmail.com>",
   "contributors": [
     {

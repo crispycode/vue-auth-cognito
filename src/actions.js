@@ -18,6 +18,14 @@ function constructUser(cognitoUser, session) {
   };
 }
 
+function isUserAuthenticated(user) {
+  if (user === null || (user && user.tokens === null)) {
+    return false;
+  }
+
+  return true;
+}
+
 // cannot use ES6 classes, the methods are not enumerable, properties are.
 export default function actionsFactory(config) {
   const cognitoUserPool = new CognitoUserPool({
@@ -48,6 +56,7 @@ export default function actionsFactory(config) {
           const constructedUser = constructUser(cognitoUser, session);
           // Call AUTHENTICATE because it's utterly the same
           commit(types.AUTHENTICATE, constructedUser);
+          commit(types.SET_COGNITO_USER, cognitoUser);
           resolve(constructedUser);
         });
       });
@@ -70,6 +79,7 @@ export default function actionsFactory(config) {
         },
         onSuccess: (session, userConfirmationNecessary) => {
           commit(types.AUTHENTICATE, constructUser(cognitoUser, session));
+          commit(types.SET_COGNITO_USER, cognitoUser);
           resolve({ userConfirmationNecessary });
         },
       }));
@@ -92,6 +102,7 @@ export default function actionsFactory(config) {
                 tokens: null, // no session yet
                 attributes: {},
               });
+              commit(types.SET_COGNITO_USER, data.user);
               resolve({ userConfirmationNecessary: !data.userConfirmed });
               return;
             }
@@ -173,7 +184,7 @@ export default function actionsFactory(config) {
     changePassword({ state }, payload) {
       return new Promise((resolve, reject) => {
         // Make sure the user is authenticated
-        if (state.user === null || (state.user && state.user.tokens === null)) {
+        if (!isUserAuthenticated(state.user)) {
           reject({
             message: 'User is unauthenticated',
           });
@@ -203,7 +214,7 @@ export default function actionsFactory(config) {
     updateAttributes({ commit, state }, payload) {
       return new Promise((resolve, reject) => {
         // Make sure the user is authenticated
-        if (state.user === null || (state.user && state.user.tokens === null)) {
+        if (!isUserAuthenticated(state.user)) {
           reject({
             message: 'User is unauthenticated',
           });
@@ -238,7 +249,7 @@ export default function actionsFactory(config) {
     getUserAttributes({ commit, state }) {
       return new Promise((resolve, reject) => {
         // Make sure the user is authenticated
-        if (state.user === null || (state.user && state.user.tokens === null)) {
+        if (!isUserAuthenticated(state.user)) {
           reject({
             message: 'User is unauthenticated',
           });
@@ -274,7 +285,7 @@ export default function actionsFactory(config) {
     signOut({ commit, state }) {
       return new Promise((resolve, reject) => {
         // Make sure the user is authenticated
-        if (state.user === null || (state.user && state.user.tokens === null)) {
+        if (!isUserAuthenticated(state.user)) {
           reject({
             message: 'User is unauthenticated',
           });
@@ -290,6 +301,6 @@ export default function actionsFactory(config) {
         commit(types.SIGNOUT);
         resolve();
       });
-    },
+    }
   };
 }
