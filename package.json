@@ -1,5 +1,5 @@
 {
-  "name": "vue-auth-cognito",
+  "name": "vuex-cognito",
   "version": "0.1.5",
   "description": "A Vue.js Vuex module for authentication using Amazon AWS Cognito",
   "main": "lib/index.js",
@@ -16,6 +16,9 @@
     {
       "name": "Anton Sekatski",
       "email": "antonsekatski@gmail.com"
+    },
+    {
+      "name": "Laszlo Tordai"
     }
   ],
   "license": "MIT",
