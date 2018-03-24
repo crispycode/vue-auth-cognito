@@ -12,7 +12,8 @@
   },
   "repository": "https://github.com/crispycode/vuex-cognito",
   "author": "Evgeny Zislis <evgeny.zislis@gmail.com>",
-  "contributors": [{
+  "contributors": [
+    {
       "name": "Anton Sekatski",
       "email": "antonsekatski@gmail.com"
     },
@@ -23,7 +24,7 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "amazon-cognito-identity-js": "^1.19.0",
+    "amazon-cognito-identity-js": "^2.0.2",
     "vuex": "^3.0.0"
   },
   "devDependencies": {
