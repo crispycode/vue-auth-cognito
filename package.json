@@ -12,13 +12,13 @@
   },
   "repository": "https://github.com/crispycode/vuex-cognito",
   "author": "Evgeny Zislis <evgeny.zislis@gmail.com>",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Anton Sekatski",
       "email": "antonsekatski@gmail.com"
     },
     {
-      "name": "Laszlo Tordai"
+      "name": "Laszlo Tordai",
+      "email": "laszlo.tordai@crispycode.co.uk"
     }
   ],
   "license": "MIT",
@@ -48,6 +48,6 @@
   },
   "release-script": {
     "defaultDryRun": "true",
-    "bowerRepo": "git@github.com:kopterio/vue-auth-cognito-bower.git"
+    "bowerRepo": "git@github.com:crispycode/vuex-cognito-bower.git"
   }
 }
